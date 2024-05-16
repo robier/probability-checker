@@ -13,7 +13,14 @@ will always return true. Everything in between will be around the number you pro
 **Note:** This method is not exact but approximation, so if you want 20%, you will get 21%, 23% maybe 18%, but at the
 end it will be around 20% (the greater number of request, more accurate will be the percentage).
 
-### Sample
+### Installation
+
+This library can be installed via composer:
+```bash
+composer require robier/probability-checker
+```
+
+### Sample usage
 
 ```php
 <?php
