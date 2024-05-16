@@ -1,3 +1,6 @@
+[![codecov](https://codecov.io/github/robier/probability-checker/branch/master/graph/badge.svg?token=FBN0N0WCPP)](https://codecov.io/github/robier/probability-checker)
+
+-------------------
 # ProbabilityChecker
 
 Pretty simple probability implementation that can be used for A/B testing. If you have
