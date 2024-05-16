@@ -1,0 +1,46 @@
+{
+  "name": "robier/probability-checker",
+  "authors": [
+    {
+      "name": "Robert Premar",
+      "email": "robert.premar@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "description": "Probability Checker is a simple library that helps you to check the probability of an event.",
+  "keywords" : [
+    "probability",
+    "ab testing"
+  ],
+  "readme": "./README.md",
+  "license": "MIT",
+  "autoload": {
+    "classmap": [
+      "src/ProbabilityChecker.php"
+    ]
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/ProbabilityCheckerTest.php"
+    ]
+  },
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-text",
+    "test:coverage:html": "XDEBUG_MODE=coverage phpunit --coverage-html .cache/coverage"
+  },
+  "scripts-descriptions": {
+    "test": "Run all tests in process isolation mode",
+    "test:coverage": "Run all tests in process isolation mode with text coverage",
+    "test:coverage:html": "Run all tests in process isolation mode with html coverage that is generated inside .cache/coverage directory"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

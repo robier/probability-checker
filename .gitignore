@@ -1,0 +1,8 @@
+# remove vendors
+/vendor
+
+# phpunit cache directory
+/.cache
+
+# phpunit cache directory
+/.idea
