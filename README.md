@@ -52,3 +52,31 @@ Skipped 700351 and Executed 299649
 Skipped 70.0351% and Executed 29.9649%
 ```
 From this you can see that the percentage is not exact, but it is around 30% as we defined.
+
+### Methods
+
+We have few methods in the class:
+
+| **Name**       | **Description**                                                                  |
+|----------------|----------------------------------------------------------------------------------|
+| roll()         | Like rolling the dice, depending on provided percentage it will be true or false |
+| isCertian()    | If percentage is 100 or more, this method will return true                       |
+| isImpossible() | If percentage is 0 or less, this method will return true                         |
+| isPossible()   | If percentage is between 0 and 100 (both excluded), this method will return true |
+| ::always()     | Factory method, that will create new instance with 100%                          |
+| ::never()      | Factory method, that will create new instance with 0%                            |
+
+### Local development
+
+To run tests locally you can use provided docker setup. Just run:
+```bash
+docker/build
+```
+to build the image and then run:
+```bash
+docker/run composer test
+```
+to run the tests. If you want to run tests with coverage, you can run:
+```bash
+docker/run composer test:coverage
+```
