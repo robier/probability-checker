@@ -9,26 +9,42 @@ use PHPUnit\Framework\TestCase;
 use Robier\ProbabilityChecker;
 
 /**
- * @covers ProbabilityChecker
+ * @coversNothing
  */
 final class ProbabilityCheckerTest extends TestCase
 {
+    /**
+     * @covers \Robier\ProbabilityChecker::always
+     * @covers \Robier\ProbabilityChecker::isCertian
+     * @covers \Robier\ProbabilityChecker::isImpossible
+     * @covers \Robier\ProbabilityChecker::isPossible
+     * @covers \Robier\ProbabilityChecker::roll
+     */
     public function testAlwaysFactory(): void
     {
         $checker = ProbabilityChecker::always();
         for ($i = 0; $i < 100; $i++) {
             self::assertTrue($checker->isCertian());
             self::assertFalse($checker->isImpossible());
+            self::assertFalse($checker->isPossible());
             self::assertTrue($checker->roll());
         }
     }
 
+    /**
+     * @covers \Robier\ProbabilityChecker::never
+     * @covers \Robier\ProbabilityChecker::isCertian
+     * @covers \Robier\ProbabilityChecker::isImpossible
+     * @covers \Robier\ProbabilityChecker::isPossible
+     * @covers \Robier\ProbabilityChecker::roll
+     */
     public function testNeverFactory(): void
     {
         $checker = ProbabilityChecker::never();
         for ($i = 0; $i < 100; $i++) {
             self::assertFalse($checker->isCertian());
             self::assertTrue($checker->isImpossible());
+            self::assertFalse($checker->isPossible());
             self::assertFalse($checker->roll());
         }
     }
@@ -37,12 +53,19 @@ final class ProbabilityCheckerTest extends TestCase
     {
         yield 'More than 100%' => [200];
         yield 'Exactly 100%' => [100];
+        yield 'Exactly 100.0%' => [100.0];
     }
 
     /**
+     * @covers \Robier\ProbabilityChecker::__construct
+     * @covers \Robier\ProbabilityChecker::isCertian
+     * @covers \Robier\ProbabilityChecker::isImpossible
+     * @covers \Robier\ProbabilityChecker::isPossible
+     * @covers \Robier\ProbabilityChecker::roll
+     *
      * @dataProvider isCertianDataProvider
      */
-    public function testIsCertian(int $percentage): void
+    public function testIsCertian(int|float $percentage): void
     {
         $checker = new ProbabilityChecker($percentage);
         for ($i = 0; $i < 100; $i++) {
@@ -50,6 +73,7 @@ final class ProbabilityCheckerTest extends TestCase
             // is always the same
             self::assertTrue($checker->isCertian());
             self::assertFalse($checker->isImpossible());
+            self::assertFalse($checker->isPossible());
             self::assertTrue($checker->roll());
         }
     }
@@ -58,12 +82,19 @@ final class ProbabilityCheckerTest extends TestCase
     {
         yield 'Less than 0%' => [-15];
         yield 'Exactly 0%' => [0];
+        yield 'Exactly 0.0%' => [0.0];
     }
 
     /**
+     * @covers \Robier\ProbabilityChecker::__construct
+     * @covers \Robier\ProbabilityChecker::isCertian
+     * @covers \Robier\ProbabilityChecker::isImpossible
+     * @covers \Robier\ProbabilityChecker::isPossible
+     * @covers \Robier\ProbabilityChecker::roll
+     *
      * @dataProvider isImpossibleDataProvider
      */
-    public function testIsImpossible(int $percentage): void
+    public function testIsImpossible(int|float $percentage): void
     {
         $checker = new ProbabilityChecker($percentage);
         for ($i = 0; $i < 100; $i++) {
@@ -71,6 +102,7 @@ final class ProbabilityCheckerTest extends TestCase
             // is always the same
             self::assertFalse($checker->isCertian());
             self::assertTrue($checker->isImpossible());
+            self::assertFalse($checker->isPossible());
             self::assertFalse($checker->roll());
         }
     }
@@ -84,12 +116,20 @@ final class ProbabilityCheckerTest extends TestCase
         yield '0%' => [0];
         yield '70%' => [70];
         yield '33%' => [33];
+        yield '0.1%' => [0.1];
+        yield '0.001%' => [0.001];
     }
 
     /**
+     * @covers \Robier\ProbabilityChecker::__construct
+     * @covers \Robier\ProbabilityChecker::isCertian
+     * @covers \Robier\ProbabilityChecker::isImpossible
+     * @covers \Robier\ProbabilityChecker::isPossible
+     * @covers \Robier\ProbabilityChecker::roll
+     *
      * @dataProvider rollDataProvider
      */
-    public function testRoll(int $percentage): void
+    public function testRoll(int|float $percentage): void
     {
         $checker = new ProbabilityChecker($percentage);
 
@@ -115,6 +155,11 @@ final class ProbabilityCheckerTest extends TestCase
 
         $successPercentage = round($success / 1000);
 
-        self::assertEqualsWithDelta($percentage, $successPercentage, 2);
+        $delta = 2;
+        if($percentage < 1) {
+            $delta = $percentage * 2;
+        }
+
+        self::assertEqualsWithDelta($percentage, $successPercentage, $delta);
     }
 }

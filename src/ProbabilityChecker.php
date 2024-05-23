@@ -37,11 +37,8 @@ final class ProbabilityChecker
         // Generate a random number between 0 and $maxRandomNumber
         $randomNumber = mt_rand(0, $this->maxRandomNumber);
 
-        // Calculate the threshold based on the desired percentage
-        $threshold = $this->maxRandomNumber * $this->percentage / 100;
-
         // Check if the random number falls below the threshold
-        return $randomNumber < $threshold;
+        return $randomNumber < $this->percentage;
     }
 
     /**
