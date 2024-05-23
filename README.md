@@ -29,7 +29,7 @@ $probability = new \Robier\ProbabilityChecker(30);
 
 $skipped = 0;
 $executed = 0;
-for($i = 0; $i >= 1000000; $i++) {
+for($i = 0; $i < 1000000; $i++) {
     if ($probability->roll()) {
         $executed++;
     } else {
